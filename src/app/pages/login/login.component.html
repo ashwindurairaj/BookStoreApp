@@ -1,0 +1,71 @@
+<div class="main-container">
+  <mat-card class="left-card">
+    <img class="logo" src="/assets/pic.png" alt="BookStore Logo" />
+    <h2 class="heading">Online Book Shopping</h2>
+  </mat-card>
+  <mat-card class="right-card">
+    <div class="form_container">
+      <mat-card class="card" appearance="outlined">
+        <mat-tab-group
+          [(selectedIndex)]="selectedTabIndex"
+          (selectedIndexChange)="onTabChange($event)"
+        >
+          <mat-tab label="LOGIN">
+            <form class="form">
+              <div class="input">
+                <label for="email">Email</label>
+                <input type="email" name="email" placeholder="" />
+              </div>
+              <div class="input">
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="" />
+              </div>
+              <div class="input">
+                <button matButton="filled" class="login">Login</button>
+              </div>
+              <div class="divider">
+                <hr />
+                <h3>OR</h3>
+                <hr />
+              </div>
+
+              <div class="buttons">
+                <button matButton="filled" class="fb">Facebook</button>
+                <button matButton="filled" class="google">Google</button>
+              </div>
+            </form>
+          </mat-tab>
+          <mat-tab label="SIGNUP">
+            <form class="form">
+              <div class="input">
+                <label for="fullName">Full Name</label>
+                <input type="text" name="fullName" placeholder="" />
+              </div>
+              <div class="input">
+                <label for="email">Email Id</label>
+                <input type="email" name="email" placeholder="" />
+              </div>
+              <div class="input">
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="" />
+              </div>
+              <div class="input">
+                <label for="phone">Mobile Number</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  maxlength="10"
+                  minlength="10"
+                  placeholder=""
+                />
+              </div>
+              <div class="input">
+                <button matButton="filled" class="login">Signup</button>
+              </div>
+            </form>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card>
+    </div>
+  </mat-card>
+</div>
