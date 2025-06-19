@@ -7,8 +7,8 @@ export const routes: Routes = [
       import('./pages/login/login.component').then((m) => m.LoginComponent),
   },
   {
-    path: 'bookstore_user/register',
-    loadComponent: () =>
-      import('./pages/login/login.component').then((m) => m.LoginComponent),
+    path: '',
+    redirectTo: 'bookstore_user/login/',
+    pathMatch: 'full',
   },
 ];

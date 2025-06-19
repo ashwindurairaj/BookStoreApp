@@ -1,34 +1,79 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatButtonModule } from '@angular/material/button';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { UserService } from '../../user/user.service';
 
 @Component({
   selector: 'app-login',
-  imports: [MatCardModule, MatTabsModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatIconModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
-  selectedTabIndex = 0;
+  isLogin = true;
+  showPassword = false;
+  loginForm!: FormGroup;
+  signupForm!: FormGroup;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private userService: UserService) {}
 
-  ngOnInit() {
-    const currentPath = this.route.snapshot.routeConfig?.path;
-    if (currentPath?.includes('register')) {
-      this.selectedTabIndex = 1;
+  ngOnInit(): void {
+    this.loginForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', Validators.required),
+    });
+
+    this.signupForm = new FormGroup({
+      fullName: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', Validators.required),
+      phone: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]{10}$'),
+      ]),
+    });
+  }
+
+  showLogin() {
+    this.isLogin = true;
+  }
+
+  showSignup() {
+    this.isLogin = false;
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  onLogin(): void {
+    if (this.loginForm.valid) {
+      this.userService.login(this.loginForm.value).subscribe({
+        next: (res) => {
+          console.log('Login success:', res);
+          this.loginForm.reset();
+        },
+        error: (err) => console.error('Login failed:', err),
+      });
     }
   }
 
-  onTabChange(index: number) {
-    this.selectedTabIndex = index;
-
-    if (index === 0) {
-      this.router.navigate(['/bookstore_user/login']);
-    } else if (index === 1) {
-      this.router.navigate(['/bookstore_user/register']);
+  onSignup(): void {
+    if (this.signupForm.valid) {
+      this.userService.register(this.signupForm.value).subscribe({
+        next: (res) => {
+          console.log('Signup success:', res);
+          this.signupForm.reset();
+        },
+        error: (err) => console.error('Signup failed:', err),
+      });
     }
   }
 }
