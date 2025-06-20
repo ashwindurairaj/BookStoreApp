@@ -1,14 +1,23 @@
 import { Routes } from '@angular/router';
+import { AuthGuardService } from './services/user/auth-guard.service';
 
 export const routes: Routes = [
   {
-    path: 'bookstore_user/login',
+    path: 'login',
     loadComponent: () =>
       import('./pages/login/login.component').then((m) => m.LoginComponent),
   },
   {
     path: '',
-    redirectTo: 'bookstore_user/login/',
+    redirectTo: '/login/',
     pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    // canActivate: [AuthGuardService]
+    loadComponent: () =>
+      import('./components/dashboard/dashboard.component').then(
+        (m) => m.DashboardComponent
+      ),
   },
 ];

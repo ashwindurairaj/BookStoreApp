@@ -8,7 +8,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { UserService } from '../../user/user.service';
+import { UserService } from '../../services/user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   signupForm!: FormGroup;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -59,6 +60,7 @@ export class LoginComponent implements OnInit {
         next: (res) => {
           console.log('Login success:', res);
           this.loginForm.reset();
+          this.router.navigate(['/home']);
         },
         error: (err) => console.error('Login failed:', err),
       });

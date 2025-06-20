@@ -1,0 +1,74 @@
+<mat-toolbar class="toolbar">
+  <div class="head">
+    <img src="assets/logo.png" alt="Logo" class="logo" />
+    <span class="title">Bookstore</span>
+  </div>
+
+  <div class="search-bar">
+    <mat-icon class="search-icon">search</mat-icon>
+    <input matInput placeholder="Search" />
+  </div>
+
+  <div class="icons">
+    <div class="icon-item" [matMenuTriggerFor]="accountMenu">
+      <button mat-icon-button>
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <span>Profile</span>
+    </div>
+    <div class="icon-item">
+      <button mat-icon-button><mat-icon>shopping_cart</mat-icon></button>
+      <span>Cart</span>
+    </div>
+  </div>
+</mat-toolbar>
+<div class="book-section">
+  <h2 class="section-title">
+    Books <span>({{ books.length }} Items)</span>
+  </h2>
+
+  <div class="book-grid">
+    <app-book-card *ngFor="let book of books" [book]="book"></app-book-card>
+  </div>
+</div>
+
+<app-footer></app-footer>
+
+<mat-menu #accountMenu="matMenu" class="account-menu">
+  <ng-container *ngIf="!isLoggedIn; else loggedInBlock">
+    <div class="menu-header">Welcome</div>
+    <div class="menu-subtext">To access account and manage orders</div>
+    <div class="menu-login-wrapper">
+      <button class="login-btn">LOGIN/SIGNUP</button>
+    </div>
+    <mat-divider></mat-divider>
+    <button mat-menu-item disabled>
+      <mat-icon>assignment</mat-icon>
+      <span>My Orders</span>
+    </button>
+    <button mat-menu-item disabled>
+      <mat-icon>favorite_border</mat-icon>
+      <span>Wishlist</span>
+    </button>
+  </ng-container>
+
+  <ng-template #loggedInBlock>
+    <div class="menu-header">Hello {{ userName }},</div>
+    <button mat-menu-item>
+      <mat-icon>person</mat-icon>
+      <span>Profile</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>assignment</mat-icon>
+      <span>My Orders</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>favorite_border</mat-icon>
+      <span>My Wishlist</span>
+    </button>
+    <mat-divider></mat-divider>
+    <div class="menu-logout-wrapper">
+      <button class="logout-btn">Logout</button>
+    </div>
+  </ng-template>
+</mat-menu>
