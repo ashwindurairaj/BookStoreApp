@@ -13,6 +13,13 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'forgotPassword',
+    loadComponent: () =>
+      import('./components/forgot-password/forgot-password.component').then(
+        (m) => m.ForgotPasswordComponent
+      ),
+  },
+  {
     path: 'home',
     // canActivate: [AuthGuardService]
     loadComponent: () =>

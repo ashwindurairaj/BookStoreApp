@@ -9,11 +9,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, MatCardModule, MatIconModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    RouterLink,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
@@ -59,7 +65,7 @@ export class LoginComponent implements OnInit {
       this.userService.login(this.loginForm.value).subscribe({
         next: (res) => {
           console.log('Login success:', res);
-          this.loginForm.reset();
+          localStorage.setItem('token', (res as any).result.accessToken);
           this.router.navigate(['/home']);
         },
         error: (err) => console.error('Login failed:', err),
