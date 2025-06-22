@@ -1,7 +1,9 @@
 <mat-toolbar class="toolbar">
   <div class="head">
-    <img src="assets/logo.png" alt="Logo" class="logo" />
-    <span class="title">Bookstore</span>
+    <a routerLink="/home"
+      ><img src="assets/logo.png" alt="Logo" class="logo"
+    /></a>
+    <a routerLink="/home"><span class="title">Bookstore</span></a>
   </div>
 
   <div class="search-bar">
@@ -14,7 +16,7 @@
       <button mat-icon-button>
         <mat-icon>account_circle</mat-icon>
       </button>
-      <span>Profile</span>
+      <span>{{ isLoggedIn ? userName : "Profile" }}</span>
     </div>
     <div class="icon-item">
       <button mat-icon-button><mat-icon>shopping_cart</mat-icon></button>
@@ -22,15 +24,20 @@
     </div>
   </div>
 </mat-toolbar>
-<div class="book-section">
-  <h2 class="section-title">
-    Books <span>({{ books.length }} Items)</span>
-  </h2>
 
-  <div class="book-grid">
-    <app-book-card *ngFor="let book of books" [book]="book"></app-book-card>
+<ng-container *ngIf="router.url === '/home'">
+  <div class="book-section">
+    <h2 class="section-title">
+      Books <span>({{ books.length }} Items)</span>
+    </h2>
+
+    <div class="book-grid">
+      <app-book-card *ngFor="let book of books" [book]="book"></app-book-card>
+    </div>
   </div>
-</div>
+</ng-container>
+
+<router-outlet></router-outlet>
 
 <app-footer></app-footer>
 
@@ -39,7 +46,7 @@
     <div class="menu-header">Welcome</div>
     <div class="menu-subtext">To access account and manage orders</div>
     <div class="menu-login-wrapper">
-      <button class="login-btn">LOGIN/SIGNUP</button>
+      <button class="login-btn" routerLink="/login">LOGIN/SIGNUP</button>
     </div>
     <mat-divider></mat-divider>
     <button mat-menu-item disabled>
@@ -54,7 +61,7 @@
 
   <ng-template #loggedInBlock>
     <div class="menu-header">Hello {{ userName }},</div>
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/home/profile']">
       <mat-icon>person</mat-icon>
       <span>Profile</span>
     </button>
@@ -68,7 +75,7 @@
     </button>
     <mat-divider></mat-divider>
     <div class="menu-logout-wrapper">
-      <button class="logout-btn">Logout</button>
+      <button class="logout-btn" (click)="logout()">Logout</button>
     </div>
   </ng-template>
 </mat-menu>

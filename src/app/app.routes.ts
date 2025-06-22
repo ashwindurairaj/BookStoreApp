@@ -21,10 +21,19 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    // canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
     loadComponent: () =>
       import('./components/dashboard/dashboard.component').then(
         (m) => m.DashboardComponent
       ),
+    children: [
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/profile/profile.component').then(
+            (m) => m.ProfileComponent
+          ),
+      },
+    ],
   },
 ];

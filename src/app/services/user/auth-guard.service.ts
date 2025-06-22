@@ -9,7 +9,6 @@ export class AuthGuardService {
 
   canActivate(): boolean {
     if (localStorage.getItem('token')) {
-      console.log(localStorage.getItem('token'));
       return true;
     } else {
       this.router.navigate(['']);

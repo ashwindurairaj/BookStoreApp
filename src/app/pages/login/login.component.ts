@@ -64,9 +64,19 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.userService.login(this.loginForm.value).subscribe({
         next: (res) => {
-          console.log('Login success:', res);
-          localStorage.setItem('token', (res as any).result.accessToken);
-          this.router.navigate(['/home']);
+          console.log(res);
+          const email = this.loginForm.value.email;
+          const storedInfo = JSON.parse(
+            localStorage.getItem('userInfo') || '{}'
+          );
+          if (storedInfo?.email === email) {
+            localStorage.setItem('token', (res as any).result.accessToken);
+            this.router.navigate(['/home']);
+          } else {
+            localStorage.setItem('userInfo', JSON.stringify({ email })); // minimal info
+            localStorage.setItem('token', (res as any).result.accessToken);
+            this.router.navigate(['/home']);
+          }
         },
         error: (err) => console.error('Login failed:', err),
       });
@@ -78,7 +88,21 @@ export class LoginComponent implements OnInit {
       this.userService.register(this.signupForm.value).subscribe({
         next: (res) => {
           console.log('Signup success:', res);
+          const user = (res as any).result;
+          localStorage.setItem(
+            'userInfo',
+            JSON.stringify({
+              fullName: user.fullName,
+              email: user.email,
+              _id: user._id,
+              phone: user.phone,
+              password: user.password,
+            })
+          );
+
           this.signupForm.reset();
+
+          this.isLogin = true;
         },
         error: (err) => console.error('Signup failed:', err),
       });

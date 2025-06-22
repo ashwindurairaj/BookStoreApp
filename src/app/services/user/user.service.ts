@@ -12,6 +12,14 @@ export class UserService {
   }
 
   register(payload: any) {
-    return this.http.postApi('/bookstore_user/registration', payload);
+    return this.http.postApi('bookstore_user/registration', payload);
+  }
+
+  putInfo(payload: any) {
+    return this.http.putApi(
+      'bookstore_user/edit_user',
+      payload,
+      this.http.getHeader()
+    );
   }
 }
