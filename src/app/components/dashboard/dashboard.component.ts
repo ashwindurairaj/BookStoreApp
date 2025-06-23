@@ -6,7 +6,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
 import { BookCardComponent } from '../book-card/book-card.component';
 import { FooterComponent } from '../footer/footer.component';
-import { NotesService } from '../../services/note/notes.service';
+import { BookService } from '../../services/book/book.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
@@ -31,7 +31,7 @@ export class DashboardComponent implements OnInit {
 
   books: any[] = [];
 
-  constructor(private notesService: NotesService, public router: Router) {}
+  constructor(private bookService: BookService, public router: Router) {}
 
   ngOnInit(): void {
     const token = localStorage.getItem('token');
@@ -40,9 +40,10 @@ export class DashboardComponent implements OnInit {
     const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
     this.userName = userInfo.fullName || 'User';
 
-    this.notesService.getBooks().subscribe({
+    this.bookService.getBooks().subscribe({
       next: (res: any) => {
         this.books = res.result || [];
+        this.bookService.setBooks(this.books);
       },
       error: (err) => console.error('Error fetching books:', err),
     });

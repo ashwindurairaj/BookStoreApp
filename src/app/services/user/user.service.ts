@@ -22,4 +22,19 @@ export class UserService {
       this.http.getHeader()
     );
   }
+
+  getFeedback(productId: string) {
+    return this.http.getApi(
+      `bookstore_user/get/feedback/${productId}`,
+      this.http.getHeader()
+    );
+  }
+
+  postFeedback(productId: string, payload: any) {
+    return this.http.postApi(
+      `bookstore_user/add/feedback/${productId}`,
+      payload,
+      this.http.getHeader()
+    );
+  }
 }

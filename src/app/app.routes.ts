@@ -34,6 +34,13 @@ export const routes: Routes = [
             (m) => m.ProfileComponent
           ),
       },
+      {
+        path: 'book/:id',
+        loadComponent: () =>
+          import('./components/book-details/book-details.component').then(
+            (m) => m.BookDetailsComponent
+          ),
+      },
     ],
   },
 ];

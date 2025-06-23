@@ -10,9 +10,9 @@ export class HttpService {
   constructor(private http: HttpClient) {}
 
   getHeader() {
-    const token = localStorage.getItem('token');
     return new HttpHeaders({
-      Authorization: token ? `Bearer ${token}` : '',
+      'Content-Type': 'application/json',
+      'x-access-token': localStorage.getItem('token') || '',
     });
   }
 
@@ -34,5 +34,11 @@ export class HttpService {
     headers: HttpHeaders = new HttpHeaders()
   ) {
     return this.http.put(this.baseUrl + endpoint, payload, { headers });
+  }
+
+  deleteApi(endpoint: string, headers?: HttpHeaders) {
+    return this.http.delete(this.baseUrl + endpoint, {
+      headers: headers || this.getHeader(),
+    });
   }
 }

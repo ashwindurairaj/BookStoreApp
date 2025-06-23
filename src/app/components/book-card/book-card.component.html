@@ -1,4 +1,4 @@
-<div class="card-wrapper">
+<div class="card-wrapper" [routerLink]="['/home/book', book._id]">
   <mat-card class="book-card" [class.out-of-stock]="book.quantity <= 0">
     <div class="quick-view">QUICK VIEW</div>
 

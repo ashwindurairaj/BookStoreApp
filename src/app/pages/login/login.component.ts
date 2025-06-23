@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('token', (res as any).result.accessToken);
             this.router.navigate(['/home']);
           } else {
-            localStorage.setItem('userInfo', JSON.stringify({ email })); // minimal info
+            localStorage.setItem('userInfo', JSON.stringify({ email }));
             localStorage.setItem('token', (res as any).result.accessToken);
             this.router.navigate(['/home']);
           }
