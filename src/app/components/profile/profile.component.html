@@ -37,7 +37,7 @@
 
   <form class="address-card" [formGroup]="addressForm">
     <div class="top-bar">
-      <h3>1. {{ addressForm.get("type")?.value.toUpperCase() }}</h3>
+      <h3>1. {{ addressForm.get("type")?.value }}</h3>
       <ng-container *ngIf="!isEditingAdd; else saveBtn">
         <a class="edit-link" (click)="enableAddEdit()">Edit</a>
       </ng-container>

@@ -24,6 +24,7 @@ export class BookDetailsComponent implements OnInit {
   feedbacks: any[] = [];
   selectedRating = 0;
   feedbackText = '';
+  isWishlisted = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +38,7 @@ export class BookDetailsComponent implements OnInit {
 
     if (this.book) {
       this.getFeedback();
+      this.checkWishlistStatus();
     }
   }
 
@@ -70,6 +72,26 @@ export class BookDetailsComponent implements OnInit {
         this.feedbackText = '';
       },
       error: (err) => console.error('Failed to submit feedback:', err),
+    });
+  }
+
+  addToWishlist(): void {
+    this.bookService.postWish(this.book._id).subscribe({
+      next: () => {
+        this.isWishlisted = true;
+      },
+      error: (err) => console.error('Failed to add to wishlist:', err),
+    });
+  }
+
+  checkWishlistStatus(): void {
+    this.bookService.getWish().subscribe({
+      next: (res: any) => {
+        this.isWishlisted = res.result.some(
+          (item: any) => item._id === this.book._id
+        );
+      },
+      error: (err) => console.error('Failed to load wishlist status:', err),
     });
   }
 }

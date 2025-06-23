@@ -11,9 +11,15 @@
         <button mat-raised-button color="primary" class="notify">
           Add to Bag
         </button>
-        <button mat-stroked-button color="primary" class="wish">
+        <button
+          mat-stroked-button
+          color="primary"
+          class="wish"
+          (click)="addToWishlist()"
+          [disabled]="isWishlisted"
+        >
           <mat-icon>favorite</mat-icon>
-          Wishlist
+          {{ isWishlisted ? "Wishlisted" : "Wishlist" }}
         </button>
       </div>
     </div>

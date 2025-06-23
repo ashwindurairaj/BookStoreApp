@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
     });
 
     this.addressForm = new FormGroup({
-      type: new FormControl({ value: address.type, disabled: true }),
+      type: new FormControl({ value: address.type || 'Home', disabled: true }),
       address: new FormControl({ value: address.address, disabled: true }),
       city: new FormControl({ value: address.city, disabled: true }),
       state: new FormControl({ value: address.state, disabled: true }),
@@ -90,7 +90,16 @@ export class ProfileComponent implements OnInit {
         this.isEditingAdd = false;
 
         const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-        userInfo.address = res.result.address;
+
+        userInfo.address = [
+          {
+            type: payload.addressType,
+            address: payload.fullAddress,
+            city: payload.city,
+            state: payload.state,
+          },
+        ];
+
         localStorage.setItem('userInfo', JSON.stringify(userInfo));
 
         Object.values(this.addressForm.controls).forEach((control) =>

@@ -20,4 +20,28 @@ export class BookService {
   getBookById(id: string) {
     return this.books.find((book) => book._id === id);
   }
+
+  getWish() {
+    return this.http.getApi(
+      'bookstore_user/get_wishlist_items',
+      this.http.getHeader()
+    );
+  }
+
+  postWish(productId: string) {
+    const headers = this.http.getHeader();
+    return this.http.postApi(
+      `bookstore_user/add_wish_list/${productId}`,
+      {},
+      headers
+    );
+  }
+
+  removeWish(productId: string) {
+    const headers = this.http.getHeader();
+    return this.http.deleteApi(
+      `bookstore_user/remove_wishlist_item/${productId}`,
+      headers
+    );
+  }
 }

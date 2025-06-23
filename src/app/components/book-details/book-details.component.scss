@@ -230,12 +230,21 @@
         }
 
         .button-group {
-          //   flex-direction: column;
-          //   width: 100%;
-
           button {
             width: 100%;
           }
+        }
+      }
+
+      .notify {
+        font-size: small;
+      }
+
+      .wish {
+        font-size: small;
+        mat-icon {
+          color: #f7f7f7;
+          font-size: medium;
         }
       }
 
