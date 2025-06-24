@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
     const token = localStorage.getItem('token');
     this.isLoggedIn = !!token;
 
-    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    const userInfo = JSON.parse(localStorage.getItem('currentUser') || '{}');
     this.userName = userInfo.fullName || 'User';
 
     this.bookService.getBooks().subscribe({
@@ -51,7 +51,12 @@ export class DashboardComponent implements OnInit {
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
     this.isLoggedIn = false;
     this.router.navigate(['/login']);
+  }
+
+  cart() {
+    this.router.navigate(['/home/cart']);
   }
 }

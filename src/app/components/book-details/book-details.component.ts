@@ -25,6 +25,8 @@ export class BookDetailsComponent implements OnInit {
   selectedRating = 0;
   feedbackText = '';
   isWishlisted = false;
+  isInCart = false;
+  quantity = 1;
 
   constructor(
     private route: ActivatedRoute,
@@ -93,5 +95,25 @@ export class BookDetailsComponent implements OnInit {
       },
       error: (err) => console.error('Failed to load wishlist status:', err),
     });
+  }
+
+  addToCart(): void {
+    this.bookService.addCart(this.book._id).subscribe({
+      next: () => {
+        console.log('Added to cart successfully');
+        this.isInCart = true;
+      },
+      error: (err) => console.error('Failed to add to cart:', err),
+    });
+  }
+
+  increment(): void {
+    this.quantity += 1;
+  }
+
+  decrement(): void {
+    if (this.quantity > 1) {
+      this.quantity -= 1;
+    }
   }
 }

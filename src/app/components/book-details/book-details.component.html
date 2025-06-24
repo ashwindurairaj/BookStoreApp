@@ -8,9 +8,28 @@
       <img [src]="'assets/bookimg.png'" alt="Book Image" class="book-image" />
 
       <div class="button-group">
-        <button mat-raised-button color="primary" class="notify">
-          Add to Bag
-        </button>
+        <ng-container *ngIf="!isInCart; else quantityControls">
+          <button
+            mat-raised-button
+            color="primary"
+            class="notify"
+            (click)="addToCart()"
+          >
+            Add to Bag
+          </button>
+        </ng-container>
+
+        <ng-template #quantityControls>
+          <button mat-icon-button class="quantity-btn" (click)="decrement()">
+            <mat-icon>remove</mat-icon>
+          </button>
+
+          <span class="quantity-value">{{ quantity }}</span>
+
+          <button mat-icon-button class="quantity-btn" (click)="increment()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </ng-template>
         <button
           mat-stroked-button
           color="primary"

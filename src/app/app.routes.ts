@@ -48,6 +48,27 @@ export const routes: Routes = [
             (m) => m.WishlistComponent
           ),
       },
+      {
+        path: 'cart',
+        loadComponent: () =>
+          import('./components/cart/cart.component').then(
+            (m) => m.CartComponent
+          ),
+      },
+      {
+        path: 'orderSuccess',
+        loadComponent: () =>
+          import('./components/order-success/order-success.component').then(
+            (m) => m.OrderSuccessComponent
+          ),
+      },
+      {
+        path: 'orders',
+        loadComponent: () =>
+          import('./components/orders/orders.component').then(
+            (m) => m.OrdersComponent
+          ),
+      },
     ],
   },
 ];

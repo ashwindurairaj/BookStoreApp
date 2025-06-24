@@ -29,7 +29,8 @@ export class ProfileComponent implements OnInit {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+    const userInfo = JSON.parse(localStorage.getItem('currentUser') || '{}');
+
     const address = (userInfo.address && userInfo.address[0]) || {
       type: 'Home',
       address: '',
@@ -89,9 +90,12 @@ export class ProfileComponent implements OnInit {
         console.log('User info updated:', res);
         this.isEditingAdd = false;
 
-        const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+        let users = JSON.parse(localStorage.getItem('users') || '[]');
+        let currentUser = JSON.parse(
+          localStorage.getItem('currentUser') || '{}'
+        );
 
-        userInfo.address = [
+        currentUser.address = [
           {
             type: payload.addressType,
             address: payload.fullAddress,
@@ -100,7 +104,13 @@ export class ProfileComponent implements OnInit {
           },
         ];
 
-        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+        users = users.map((user: any) =>
+          user.email === currentUser.email ? currentUser : user
+        );
+
+        localStorage.setItem('users', JSON.stringify(users));
 
         Object.values(this.addressForm.controls).forEach((control) =>
           (control as FormControl).disable()

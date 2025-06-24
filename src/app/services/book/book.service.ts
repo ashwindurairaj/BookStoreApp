@@ -44,4 +44,47 @@ export class BookService {
       headers
     );
   }
+
+  getCart() {
+    const headers = this.http.getHeader();
+    return this.http.getApi('bookstore_user/get_cart_items', headers);
+  }
+
+  addCart(productId: string) {
+    const headers = this.http.getHeader();
+    return this.http.postApi(
+      `bookstore_user/add_cart_item/${productId}`,
+      {},
+      headers
+    );
+  }
+
+  updateCart(cartItemId: string, quantity: number) {
+    const headers = this.http.getHeader();
+    return this.http.putApi(
+      `bookstore_user/cart_item_quantity/${cartItemId}`,
+      { quantityToBuy: quantity },
+      headers
+    );
+  }
+
+  removeCart(cartItemId: string) {
+    const headers = this.http.getHeader();
+    return this.http.deleteApi(
+      `bookstore_user/remove_cart_item/${cartItemId}`,
+      headers
+    );
+  }
+
+  addOrder(orderPayload: {
+    orders: {
+      product_id: string;
+      product_name: string;
+      product_quantity: number;
+      product_price: number;
+    }[];
+  }) {
+    const headers = this.http.getHeader();
+    return this.http.postApi('bookstore_user/add/order', orderPayload, headers);
+  }
 }

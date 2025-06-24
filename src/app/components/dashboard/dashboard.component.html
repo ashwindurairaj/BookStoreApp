@@ -18,7 +18,7 @@
       </button>
       <span>{{ isLoggedIn ? userName : "Profile" }}</span>
     </div>
-    <div class="icon-item">
+    <div class="icon-item" (click)="cart()">
       <button mat-icon-button><mat-icon>shopping_cart</mat-icon></button>
       <span>Cart</span>
     </div>
@@ -65,7 +65,7 @@
       <mat-icon>person</mat-icon>
       <span>Profile</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/home/orders']">
       <mat-icon>assignment</mat-icon>
       <span>My Orders</span>
     </button>
