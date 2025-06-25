@@ -207,6 +207,31 @@
   }
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+
+  button {
+    margin: 0 4px;
+    border: 1px solid #ccc;
+    padding: 4px 12px;
+    border-radius: 4px;
+
+    &.active {
+      background-color: #1976d2;
+      color: white;
+      font-weight: bold;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
 @media screen and (max-width: 768px) {
   .book-section {
     padding: 1.5rem 0rem 1.5rem 3rem;

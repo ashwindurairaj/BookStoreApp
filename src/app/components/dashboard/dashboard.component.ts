@@ -30,6 +30,8 @@ import { FormsModule } from '@angular/forms';
 export class DashboardComponent implements OnInit {
   isLoggedIn = false;
   userName = 'User';
+  currentPage: number = 1;
+  itemsPerPage: number = 12;
 
   books: any[] = [];
   filteredBooks: any[] = [];
@@ -93,6 +95,33 @@ export class DashboardComponent implements OnInit {
           new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
         );
       });
+    }
+  }
+
+  get paginatedBooks() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredBooks.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  get totalPages() {
+    return Math.ceil(this.filteredBooks.length / this.itemsPerPage);
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
     }
   }
 }
