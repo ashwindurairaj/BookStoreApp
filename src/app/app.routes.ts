@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthGuardService } from './services/user/auth-guard.service';
+import { BookDetailsComponent } from './components/book-details/book-details.component';
 
 export const routes: Routes = [
   {
@@ -36,10 +37,7 @@ export const routes: Routes = [
       },
       {
         path: 'book/:id',
-        loadComponent: () =>
-          import('./components/book-details/book-details.component').then(
-            (m) => m.BookDetailsComponent
-          ),
+        component: BookDetailsComponent,
       },
       {
         path: 'wishlist',
