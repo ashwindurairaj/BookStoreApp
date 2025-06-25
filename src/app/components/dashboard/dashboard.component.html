@@ -8,7 +8,21 @@
 
   <div class="search-bar">
     <mat-icon class="search-icon">search</mat-icon>
-    <input matInput placeholder="Search" />
+    <input
+      matInput
+      placeholder="Search"
+      [(ngModel)]="searchText"
+      (input)="searchBooks()"
+      [disabled]="router.url !== '/home'"
+    />
+    <button
+      mat-icon-button
+      (click)="clearSearch()"
+      class="close"
+      [disabled]="router.url !== '/home'"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
 
   <div class="icons">
@@ -28,11 +42,14 @@
 <ng-container *ngIf="router.url === '/home'">
   <div class="book-section">
     <h2 class="section-title">
-      Books <span>({{ books.length }} Items)</span>
+      Books <span>({{ filteredBooks.length }} Items)</span>
     </h2>
 
     <div class="book-grid">
-      <app-book-card *ngFor="let book of books" [book]="book"></app-book-card>
+      <app-book-card
+        *ngFor="let book of filteredBooks"
+        [book]="book"
+      ></app-book-card>
     </div>
   </div>
 </ng-container>

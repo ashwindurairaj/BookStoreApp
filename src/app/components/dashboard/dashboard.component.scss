@@ -37,6 +37,10 @@
   padding: 0 10px;
   height: 36px;
   width: 40%;
+  &:disabled {
+    background-color: #a49d9d;
+    cursor: not-allowed;
+  }
 
   .search-icon {
     color: #757575;
@@ -48,6 +52,15 @@
     padding-left: 8px;
     width: 100%;
     font-size: 14px;
+  }
+
+  .close {
+    background-color: #fff;
+    border: none;
+
+    mat-icon {
+      color: #c0c0c0;
+    }
   }
 }
 

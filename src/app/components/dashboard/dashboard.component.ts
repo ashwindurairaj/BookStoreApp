@@ -8,6 +8,7 @@ import { BookCardComponent } from '../book-card/book-card.component';
 import { FooterComponent } from '../footer/footer.component';
 import { BookService } from '../../services/book/book.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +22,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
     FooterComponent,
     RouterLink,
     RouterOutlet,
+    FormsModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -30,6 +32,8 @@ export class DashboardComponent implements OnInit {
   userName = 'User';
 
   books: any[] = [];
+  filteredBooks: any[] = [];
+  searchText: string = '';
 
   constructor(private bookService: BookService, public router: Router) {}
 
@@ -43,10 +47,28 @@ export class DashboardComponent implements OnInit {
     this.bookService.getBooks().subscribe({
       next: (res: any) => {
         this.books = res.result || [];
+        this.filteredBooks = this.books;
         this.bookService.setBooks(this.books);
       },
       error: (err) => console.error('Error fetching books:', err),
     });
+  }
+
+  searchBooks(): void {
+    const search = this.searchText.trim().toLowerCase();
+
+    if (search.length === 0) {
+      this.filteredBooks = this.books;
+    } else {
+      this.filteredBooks = this.books.filter((book: any) =>
+        book.bookName.toLowerCase().includes(search)
+      );
+    }
+  }
+
+  clearSearch(): void {
+    this.searchText = '';
+    this.filteredBooks = this.books;
   }
 
   logout(): void {
