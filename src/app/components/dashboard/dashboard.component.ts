@@ -81,4 +81,18 @@ export class DashboardComponent implements OnInit {
   cart() {
     this.router.navigate(['/home/cart']);
   }
+
+  sortBooks(order: string): void {
+    if (order === 'lowToHigh') {
+      this.filteredBooks.sort((a, b) => a.discountPrice - b.discountPrice);
+    } else if (order === 'highToLow') {
+      this.filteredBooks.sort((a, b) => b.discountPrice - a.discountPrice);
+    } else if (order === 'newest') {
+      this.filteredBooks.sort((a, b) => {
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      });
+    }
+  }
 }

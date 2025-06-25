@@ -41,9 +41,28 @@
 
 <ng-container *ngIf="router.url === '/home'">
   <div class="book-section">
-    <h2 class="section-title">
-      Books <span>({{ filteredBooks.length }} Items)</span>
-    </h2>
+    <div class="top">
+      <h2 class="section-title">
+        Books <span>({{ filteredBooks.length }} Items)</span>
+      </h2>
+
+      <button mat-button [matMenuTriggerFor]="sortMenu" class="sort-button">
+        Sort by relevance
+        <mat-icon>expand_more</mat-icon>
+      </button>
+
+      <mat-menu #sortMenu="matMenu">
+        <button mat-menu-item (click)="sortBooks('lowToHigh')">
+          Price: Low to High
+        </button>
+        <button mat-menu-item (click)="sortBooks('highToLow')">
+          Price: High to Low
+        </button>
+        <button mat-menu-item (click)="sortBooks('newest')">
+          Newest Arrivals
+        </button>
+      </mat-menu>
+    </div>
 
     <div class="book-grid">
       <app-book-card
