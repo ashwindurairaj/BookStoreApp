@@ -32,6 +32,7 @@ export class CartComponent implements OnInit {
   addresses: any[] = [];
   showSummary: boolean = false;
   isContinueLoading: boolean = false;
+  showCustomerDetails: boolean = false;
 
   constructor(private bookService: BookService, private router: Router) {}
 
@@ -69,7 +70,9 @@ export class CartComponent implements OnInit {
 
   updateCart(item: any): void {
     this.bookService.updateCart(item._id, item.quantityToBuy).subscribe({
-      next: () => {},
+      next: () => {
+        this.fetchCartItems();
+      },
       error: (err) => console.error('Failed to update cart quantity:', err),
     });
   }
@@ -120,11 +123,27 @@ export class CartComponent implements OnInit {
     this.bookService.addOrder(orderPayload).subscribe({
       next: (res: any) => {
         const orderId = res.result[0]._id;
+
+        this.cartItems.forEach((item) => {
+          this.bookService.removeCart(item._id).subscribe({
+            next: () => {
+              this.fetchCartItems();
+            },
+            error: (err) => console.error('Failed to remove from cart:', err),
+          });
+        });
+
         this.router.navigate(['home/orderSuccess'], {
           queryParams: { orderId: orderId },
         });
       },
       error: (err) => console.error('Failed to place order:', err),
     });
+  }
+
+  getTotalPrice(): number {
+    return this.cartItems.reduce((total, item) => {
+      return total + item.product_id.discountPrice * item.quantityToBuy;
+    }, 0);
   }
 }

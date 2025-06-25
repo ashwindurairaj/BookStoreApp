@@ -257,7 +257,6 @@
 
       h4 {
         margin-bottom: 4px;
-        font-weight: 600;
       }
 
       .author {
@@ -268,7 +267,12 @@
 
       .sale-price {
         font-weight: bold;
-        font-size: 16px;
+      }
+
+      .quantity {
+        margin-left: 12px;
+        font-weight: 500;
+        color: #555;
       }
     }
 
@@ -285,4 +289,28 @@
       }
     }
   }
+}
+
+.total-section {
+  margin-top: 16px;
+  text-align: right;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.bordered-box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.action-button {
+  margin: 16px 0;
+  text-align: center;
+}
+
+.customer-details,
+.order-summary {
+  margin-top: 20px;
 }
