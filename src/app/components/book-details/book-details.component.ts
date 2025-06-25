@@ -102,6 +102,19 @@ export class BookDetailsComponent implements OnInit {
       next: () => {
         console.log('Added to cart successfully');
         this.isInCart = true;
+
+        this.bookService.getCart().subscribe({
+          next: (res: any) => {
+            const cartItem = res.result.find(
+              (item: any) => item.product_id._id === this.book._id
+            );
+
+            if (cartItem) {
+              this.book.cartItemId = cartItem._id;
+            }
+          },
+          error: (err) => console.error('Failed to fetch cart:', err),
+        });
       },
       error: (err) => console.error('Failed to add to cart:', err),
     });
@@ -109,11 +122,30 @@ export class BookDetailsComponent implements OnInit {
 
   increment(): void {
     this.quantity += 1;
+
+    if (this.isInCart && this.book.cartItemId) {
+      this.bookService
+        .updateCart(this.book.cartItemId, this.quantity)
+        .subscribe({
+          next: () => console.log('Cart quantity updated successfully'),
+          error: (err) => console.error('Failed to update cart quantity:', err),
+        });
+    }
   }
 
   decrement(): void {
     if (this.quantity > 1) {
       this.quantity -= 1;
+
+      if (this.isInCart && this.book.cartItemId) {
+        this.bookService
+          .updateCart(this.book.cartItemId, this.quantity)
+          .subscribe({
+            next: () => console.log('Cart quantity updated successfully'),
+            error: (err) =>
+              console.error('Failed to update cart quantity:', err),
+          });
+      }
     }
   }
 }

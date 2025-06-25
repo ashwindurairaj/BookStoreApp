@@ -261,15 +261,17 @@
         }
       }
 
-      .notify {
-        font-size: small;
-      }
+      .button-group {
+        .notify {
+          font-size: small;
+        }
 
-      .wish {
-        font-size: small;
-        mat-icon {
-          color: #f7f7f7;
-          font-size: medium;
+        .wish {
+          font-size: small;
+          mat-icon {
+            color: #f7f7f7;
+            font-size: medium;
+          }
         }
       }
 
