@@ -17,7 +17,7 @@ export class OrdersComponent {
       price: 1500,
       originalPrice: 2000,
       orderDate: 'May 21',
-      image: 'assets/bookimg.png',
+      image: 'assets/book.png',
     },
     {
       bookName: 'React Material-UI',

@@ -2,7 +2,7 @@
   <mat-card class="book-card" [class.out-of-stock]="book.quantity <= 0">
     <div class="quick-view">QUICK VIEW</div>
 
-    <img mat-card-image [src]="'assets/bookimg.png'" alt="Book Image" />
+    <img mat-card-image [src]="'assets/book.png'" alt="Book Image" />
 
     <div class="stock-label" *ngIf="book.quantity <= 0">OUT OF STOCK</div>
 

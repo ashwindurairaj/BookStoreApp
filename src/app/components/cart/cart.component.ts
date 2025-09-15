@@ -91,20 +91,20 @@ export class CartComponent implements OnInit {
   }
 
   continueToSummary(): void {
-    if (this.addresses.length === 0) {
-      alert('No address available. Please add an address.');
-      return;
-    }
+    // if (this.addresses.length === 0) {
+    //   alert('No address available. Please add an address.');
+    //   return;
+    // }
 
     this.isContinueLoading = true;
 
+    this.showSummary = true;
     setTimeout(() => {
       const selectedAddress = this.addresses[0];
       this.userAddress = selectedAddress.address;
       this.userCity = selectedAddress.city;
       this.userState = selectedAddress.state;
       this.userType = selectedAddress.type || 'Home';
-      this.showSummary = true;
 
       this.isContinueLoading = false;
     }, 300);
