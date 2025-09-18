@@ -21,6 +21,17 @@
       color: #333;
     }
   }
+  .address-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.delete-icon {
+  cursor: pointer;
+  color: red;
+  margin-left: 10px;
+}
 
   .cart-header {
     display: flex;
@@ -146,6 +157,15 @@
     h3 {
       margin-bottom: 16px;
       font-weight: bold;
+    }
+    .customer-field{
+       textarea  {
+          width: 90%;
+          padding: 8px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          background-color: #f7f7f7;
+        }
     }
 
     .customer-fields {

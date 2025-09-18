@@ -20,19 +20,11 @@
         <span class="original-price">Rs. {{ item.product_id.price }}</span>
       </div>
       <div class="quantity-control">
-        <button
-          mat-icon-button
-          class="addBtn"
-          (click)="decrementQuantity(item)"
-        >
+        <button mat-icon-button class="addBtn" (click)="decrementQuantity(item)">
           <mat-icon>remove</mat-icon>
         </button>
         <span>{{ item.quantityToBuy }}</span>
-        <button
-          mat-icon-button
-          class="addBtn"
-          (click)="incrementQuantity(item)"
-        >
+        <button mat-icon-button class="addBtn" (click)="incrementQuantity(item)">
           <mat-icon>add</mat-icon>
         </button>
         <a class="remove-link" (click)="removeFromCart(item._id)">Remove</a>
@@ -41,18 +33,29 @@
   </div>
 
   <div class="action-button" *ngIf="!showCustomerDetails && !showSummary">
-    <button
-      mat-raised-button
-      color="primary"
-      class="continue-button"
-      (click)="showCustomerDetails = true"
-    >
+    <button mat-raised-button color="primary" class="continue-button" (click)="showCustomerDetails = true">
       PROCEED TO CUSTOMER DETAILS
     </button>
   </div>
 
   <div *ngIf="showCustomerDetails" class="customer-details bordered-box">
     <h3>Customer Details</h3>
+
+    <!-- Display saved addresses if available -->
+    <div *ngIf="addresses.length > 0">
+      <h4>Select a saved address:</h4>
+      <div *ngFor="let address of addresses; let i = index" class="saved-address">
+        <div class="address-item">
+          <mat-radio-button [checked]="selectedAddressIndex === i" (click)="selectAddress(i)">
+            {{ address.type }}: {{ address.address }}, {{ address.city }}, {{ address.state }}
+          </mat-radio-button>
+
+          <mat-icon class="delete-icon" (click)="deleteAddress(i)">delete</mat-icon>
+        </div>
+      </div>
+      <hr>
+      <h4>Or add a new address:</h4>
+    </div>
 
     <div class="customer-fields">
       <div>
@@ -65,33 +68,41 @@
       </div>
     </div>
 
-    <div
-      *ngFor="let address of addresses; let i = index"
-      class="address-section"
-    >
+    <div class="customer-field">
       <label>Address</label>
-      <textarea [value]="address.address" disabled></textarea>
+      <textarea [(ngModel)]="newAddress.address" placeholder="Enter your address"></textarea>
+    </div>
 
-      <div class="customer-fields">
-        <div>
-          <label>City/Town</label>
-          <input [value]="address.city" disabled />
-        </div>
-        <div>
-          <label>State</label>
-          <input [value]="address.state" disabled />
-        </div>
+    <div class="customer-fields">
+      <div>
+        <label>City/Town</label>
+        <input [(ngModel)]="newAddress.city" placeholder="Enter your city" />
+      </div>
+      <div>
+        <label>State</label>
+        <input [(ngModel)]="newAddress.state" placeholder="Enter your state" />
       </div>
     </div>
 
+    <div>
+      <label>Type</label>
+      <mat-radio-group [(ngModel)]="newAddress.type">
+        <mat-radio-button value="Home">Home</mat-radio-button>
+        <mat-radio-button value="Work">Work</mat-radio-button>
+        <mat-radio-button value="Other">Other</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <!-- Optional: Keep the save button for explicit saving -->
+    <div class="action-button">
+      <button mat-stroked-button color="primary" (click)="saveAddress()">
+        SAVE THIS ADDRESS
+      </button>
+    </div>
+
     <div class="action-button" *ngIf="showCustomerDetails && !showSummary">
-      <button
-        mat-raised-button
-        color="primary"
-        class="continue-button"
-        (click)="continueToSummary()"
-      >
-        CONTINUE
+      <button mat-raised-button color="primary" class="continue-button" (click)="continueToSummary()">
+        CONTINUE TO SUMMARY
       </button>
     </div>
   </div>
@@ -109,23 +120,28 @@
       </div>
     </div>
 
+    <div class="delivery-address">
+      <h4>Delivery Address:</h4>
+      <p>{{ userType }}: {{ userAddress }}, {{ userCity }}, {{ userState }}</p>
+    </div>
+
     <div class="total-section">
       <h4>Total: Rs. {{ getTotalPrice() }}</h4>
     </div>
 
     <div class="action-button" *ngIf="showSummary">
-      <button
-        mat-raised-button
-        color="primary"
-        class="checkout-button"
-        (click)="orderNow()"
-      >
-        CHECKOUT
+      <button mat-raised-button color="primary" class="checkout-button" (click)="orderNow()">
+        PLACE ORDER
       </button>
     </div>
   </div>
 </div>
 
 <ng-template #noCart>
-  <p>Your cart is empty.</p>
+  <div class="empty-cart">
+    <mat-icon>shopping_cart</mat-icon>
+    <h3>Your cart is empty</h3>
+    <p>Add some books to get started!</p>
+    <button mat-raised-button color="primary" routerLink="/home">Continue Shopping</button>
+  </div>
 </ng-template>
